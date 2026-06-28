@@ -208,10 +208,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Use Cases */}
-      <section className="px-4 sm:px-6 lg:px-8 py-20 bg-bg-secondary">
+      {/* Examples Section */}
+      <section id="examples" className="px-4 sm:px-6 lg:px-8 py-20 bg-bg-secondary">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-16">Use Cases</h2>
+          <h2 className="text-4xl font-bold text-center mb-16">Examples</h2>
           <div className="grid md:grid-cols-2 gap-6">
             {[
               { title: 'Build a landing page', icon: <Sparkles className="w-6 h-6" /> },
@@ -238,7 +238,7 @@ export default function Home() {
       </section>
 
       {/* Features */}
-      <section className="px-4 sm:px-6 lg:px-8 py-20 max-w-5xl mx-auto">
+      <section id="features" className="px-4 sm:px-6 lg:px-8 py-20 max-w-5xl mx-auto">
         <h2 className="text-4xl font-bold text-center mb-16">Features</h2>
         <div className="grid md:grid-cols-3 gap-8">
           {[

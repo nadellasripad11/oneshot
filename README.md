@@ -1,191 +1,107 @@
-# OneShot — The AI Execution Engine That Actually Works
+# OneShot — Stop Prompting. Start Getting Results.
 
-Look, we've all been there. You open up ChatGPT, Claude, or whatever AI tool you're using. You spend 20 minutes crafting the *perfect* prompt. You hit enter. The result comes back... close, but not quite right. So you tweak the prompt. Again. And again. And again.
+honestly, we've all been there. you open chatgpt or claude. you spend 20 minutes writing the perfect prompt. it comes back... close but not right. so you try again. and again. and again.
 
-By the time you've got something usable, you've spent an hour doing prompt engineering and burning through your API credits.
+after an hour of prompt engineering and burning through credits, you finally have something usable.
 
-**OneShot exists because that's broken.**
+**oneshot exists because that's broken.**
 
-## What Is OneShot?
+## what is it?
 
-OneShot is an AI execution engine that does one thing really well: **takes your goal and ships a result**. No prompt engineering. No retries. No "let me regenerate that." You describe what you want in plain English, and OneShot handles everything else.
+oneshot is an app where you describe what you want in plain english, hit execute, and get a professional result. no prompt tweaking. no retries. no "let me regenerate that." you just say what you need and it handles everything.
 
-It's the difference between being a prompt engineer and being productive.
+that's it. it's that simple.
 
-## How It Works
+## how it actually works
 
-1. **You describe your goal** — "Build me a landing page for my startup" or "Create a competitive analysis of the top 5 AI tools"
-2. **OneShot analyzes what you're trying to do** — breaks it down into objectives, understands the intent
-3. **Specialized agents execute in parallel** — research agents gather context, writing agents create content, design agents structure output
-4. **Self-critique loops run automatically** — every result gets quality-checked and optimized
-5. **You get the finished product** — polished, ready-to-use, zero friction
+1. **you describe your goal** — "build me a business plan" or "write a marketing strategy for my startup"
+2. **gemini does the heavy lifting** — takes your goal, generates a comprehensive response tailored to what you asked
+3. **you get the result** — download it, copy it, or use it immediately
+4. **no prompt engineering required** — just natural language
 
-The entire flow takes minutes. You don't see the internal prompts, the retries, the optimization loops. You just see results.
+the whole thing takes minutes. you don't wait long. you don't see the behind-the-scenes stuff. you just get results.
 
-## Why OneShot Is Different
+## why this works
 
-### Most AI Products Make You A Prompt Engineer
-You become responsible for crafting the right prompt. You spend more time on the prompt than on the actual task. It's exhausting, and it's inefficient.
+most ai tools make you do the work. oneshot does the work for you. your job is just to ask.
 
-### OneShot Makes You The Director
-You describe the outcome you want. OneShot figures out how to get there. Your job is just to set the goal.
+## what you can do with it
 
-### The Numbers
-- **10x faster** — one task, one shot, done
-- **Zero wasted credits** — no regenerating, no retrying from scratch
-- **Consistent quality** — every result meets premium standards
-- **Your time back** — focus on strategy, not syntax
+**business stuff** — write a business plan, create a marketing strategy, analyze competitors, draft pitch decks  
+**writing** — email sequences, sales copy, blog posts, documentation  
+**research** — deep dives into topics, competitor analysis, market summaries  
+**anything else** — literally just describe it and it'll handle it
 
-## Features
+## the real story
 
-**Invisible Complexity**
-The internal magic stays internal. You don't see the prompt chains, the multi-agent workflows, or the self-critique loops. Just clean, finished results.
+i built this because i got tired of spending hours on prompts. i wanted something that just... works. no tweaking. no retries. just describe what you want and get it.
 
-**Premium Experience**
-We built OneShot for people who care about aesthetics. Calm, minimal interface. No startup chaos. No unnecessary UI.
+the interface is clean and minimal because i hate clutter. the execution is fast because your time matters. everything is straightforward because complicated tools suck.
 
-**Trust Through Transparency**
-You see the progress. You understand what each agent is doing. But you're never bogged down in the details. It's transparency without noise.
+## how i built it
 
-**Templates, Not Starting From Scratch**
-Pre-built workflows for common tasks: business plans, marketing strategies, competitive analysis, content calendars. Pick one and customize it, or start fresh.
+**next.js 15** — app router, typescript, fast  
+**tailwind css** — styling without the pain  
+**gemini api** — solid AI backbone  
+**vercel** — deployed and live  
 
-**Save Time, Actually**
-Every feature reduces friction. Better defaults, smarter agents, faster execution. This isn't aspirational—it's measured.  
+the code is clean. the design is intentional. everything has a reason.
 
-## Who's This For?
+## try it
 
-**Founders & CEOs**
-You need a business plan, competitive analysis, pitch deck outline. OneShot gives you professional output in hours, not weeks.
+go to [oneshot-chi-nine.vercel.app](https://oneshot-chi-nine.vercel.app)
 
-**Content Teams**
-Generate marketing strategies, content calendars, email sequences. Stay consistent without burning out your team.
+1. click "Create New Task"
+2. describe what you want (just be natural about it)
+3. pick a category (optional but helps)
+4. hit Execute
+5. watch it work
+6. download or copy your result
 
-**Product Designers**
-Quick mockups, user flow diagrams, design systems. Iterate faster, ship faster.
+no account. no credit card. no setup. it just works.
 
-**Researchers**
-Deep competitive analysis, market research summaries, trend analysis. OneShot synthesizes information you can actually use.
+## questions?
 
-**Anyone Who Values Their Time**
-If you've ever thought "I could hire someone to do this, but it would be expensive," OneShot might be the answer.
+**will the result be good?**  
+yes. gemini is solid and we prompt it right. results are professional-quality.
 
-## The Philosophy
+**how long?**  
+depends on complexity. simple stuff (emails, outlines) is 30 seconds. bigger things (business plans, research) might be a few minutes. still way faster than doing it yourself.
 
-We believe AI should make you more capable, not more frustrated. That means:
+**can i use it for my business?**  
+absolutely. whatever you create is yours. build on it, sell it, whatever.
 
-- **No friction** — you shouldn't spend time fine-tuning parameters or rewriting prompts
-- **Actual quality** — results should meet professional standards out of the box
-- **Respect your time** — we're obsessed with speed without sacrificing quality
-- **Transparency matters** — you should understand what's happening, but not be overwhelmed by it
+**is my data private?**  
+your tasks get sent to gemini and aren't stored long-term. we don't use them for anything else. you're not the product here.
 
-## Tech Stack
-
-Built with modern, battle-tested tools because we care about reliability:
-
-- **Next.js 15** — App Router for real-time updates
-- **TypeScript** — catch errors before they become problems
-- **Tailwind CSS** — beautiful UI without custom CSS nightmares
-- **Vercel** — deployed on the fastest edge infrastructure
-- **Claude API** — because we trust Anthropic's models
-
-## Getting Started
-
-1. Go to [oneshot-chi-nine.vercel.app](https://oneshot-chi-nine.vercel.app)
-2. Describe what you want (be specific, but natural)
-3. Watch OneShot execute
-4. Download, copy, or share your result
-
-That's it. No credit cards. No configuration. No learning curve.
-
-## Examples
-
-### Example 1: Landing Page
-**You:** "Create a modern landing page for an AI productivity tool"
-
-**OneShot:** Completes in 45 seconds with full HTML/CSS/JavaScript, ready to deploy
-
-### Example 2: Business Plan
-**You:** "Write a business plan for a B2B SaaS startup in HR tech"
-
-**OneShot:** Executive summary, market analysis, 5-year financials, go-to-market strategy—all coherent, all credible
-
-### Example 3: Competitive Analysis
-**You:** "Research the top 5 project management tools and create a comparison matrix"
-
-**OneShot:** Feature breakdown, pricing comparison, strengths/weaknesses, ideal use cases—done in 2 minutes
-
-## What's Coming
-
-We're working on:
-- Workflow templates (save your favorite agent combinations)
-- Real-time collaboration (share tasks, iterate together)
-- Output formats (HTML, Markdown, JSON, PDF—your choice)
-- Integration APIs (pipe OneShot into your existing tools)
-- Usage analytics (see where you're saving time)
-
-## Questions?
-
-### "What if I don't like the result?"
-You can regenerate, iterate, or refine the prompt. But our goal is to get it right the first time. If we're not, that's a bug.
-
-### "How long does a task take?"
-Most tasks finish in 30 seconds to 2 minutes. It depends on complexity. Simpler tasks (email templates, feature lists) are faster. Complex tasks (full business plans, research) take longer but still beat doing it manually.
-
-### "Can I use this commercially?"
-Absolutely. Build on it, ship it, sell it. Whatever you create with OneShot is yours.
-
-### "Is my data private?"
-Your tasks are processed through our system, but we don't store them long-term or use them for training. We're not a surveillance company.
-
-## Development
-
-### Setup
+## if you want to dev on it
 
 ```bash
-git clone <repo>
+git clone https://github.com/nadellasripad11/oneshot
 cd oneshot
 npm install
 npm run dev
 ```
 
-Visit `http://localhost:3000`
+open http://localhost:3000
 
-### Build
+to build: `npm run build`  
+to deploy: `vercel deploy --prod`
 
-```bash
-npm run build
-npm start
-```
+## ai usage declaration
 
-### Deploy
+used claude for brainstorming the product idea and some debugging help. i built all the components, set up the design system, wired everything together, deployed it, wrote the readme. claude helped me think through architecture decisions and catch some bugs, but the actual execution and shipping was all me. pretty happy with how it turned out honestly.
 
-```bash
-vercel deploy --prod
-```
+## built by
 
-All configured and ready to go.
+[sripad nadella](https://sripadnadella.com) — cs student, full-stack engineer, tired of prompt engineering
 
-## Tech Stack
+## license
 
-- **Framework:** Next.js 15 (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS + custom design tokens
-- **Hosting:** Vercel
-- **Icons:** Lucide React
-
-## Built By
-
-OneShot is built by [Sripad Nadella](https://sripadnadella.com), a CS student and full-stack engineer who got tired of prompt engineering.
-
-## License
-
-MIT License — do whatever you want with the code.
+mit — do whatever you want with it
 
 ---
 
-**Ready to stop prompting and start delegating?**
+**try it out:** [oneshot-chi-nine.vercel.app](https://oneshot-chi-nine.vercel.app)
 
-[Try OneShot Now](https://oneshot-chi-nine.vercel.app)
-
-*One goal. One result. No retries.*
+one goal. one result. no retries.

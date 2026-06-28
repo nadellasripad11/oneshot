@@ -28,17 +28,40 @@ export default function NewTaskPage() {
   const [goal, setGoal] = useState('');
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!goal.trim()) return;
 
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      // Redirect to task execution page
+    setError(null);
+
+    try {
+      const response = await fetch('/api/execute-task', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          goal: goal.trim(),
+          category: selectedType,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to execute task');
+      }
+
+      const data = await response.json();
+
+      // Store the result in sessionStorage to pass to execution page
+      sessionStorage.setItem('taskResult', JSON.stringify(data));
+
+      // Redirect to execution page
       window.location.href = '/dashboard/executing/1';
-    }, 500);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+      setIsSubmitting(false);
+    }
   };
 
   const handleExampleClick = (example: string) => {
@@ -52,6 +75,13 @@ export default function NewTaskPage() {
         <h1 className="text-4xl font-bold text-text-primary mb-2">What would you like accomplished?</h1>
         <p className="text-text-secondary">Describe your goal in plain English. OneShot will handle the rest.</p>
       </div>
+
+      {/* Error Message */}
+      {error && (
+        <div className="mb-8 p-4 bg-error bg-opacity-10 border border-error rounded-lg text-error">
+          {error}
+        </div>
+      )}
 
       {/* Main Input Form */}
       <form onSubmit={handleSubmit} className="space-y-8">

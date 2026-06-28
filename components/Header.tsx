@@ -8,13 +8,13 @@ export default function Header() {
           OneShot
         </Link>
         <nav className="hidden md:flex items-center gap-8">
-          <a href="#" className="text-text-secondary hover:text-text-primary transition-colors">
+          <a href="#features" className="text-text-secondary hover:text-text-primary transition-colors">
             Features
           </a>
-          <a href="#" className="text-text-secondary hover:text-text-primary transition-colors">
+          <a href="#examples" className="text-text-secondary hover:text-text-primary transition-colors">
             Examples
           </a>
-          <a href="#" className="text-text-secondary hover:text-text-primary transition-colors">
+          <a href="https://github.com/nadellasripad11/oneshot" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-text-primary transition-colors">
             Resources
           </a>
         </nav>

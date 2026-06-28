@@ -10,7 +10,6 @@ interface ExecutionStep {
   description: string;
   status: 'completed' | 'in_progress' | 'pending';
   duration?: string;
-  timestamp?: string;
 }
 
 const steps: ExecutionStep[] = [
@@ -19,21 +18,21 @@ const steps: ExecutionStep[] = [
     title: 'Understanding Goal',
     description: 'Analyzing your request and extracting objectives',
     status: 'completed',
-    duration: '2.3s',
+    duration: '0.5s',
   },
   {
     id: '2',
     title: 'Planning Work',
     description: 'Breaking down into subtasks and defining approach',
     status: 'completed',
-    duration: '3.1s',
+    duration: '0.3s',
   },
   {
     id: '3',
     title: 'Researching',
     description: 'Gathering information and context',
     status: 'in_progress',
-    duration: '1.8s',
+    duration: '1.2s',
   },
   {
     id: '4',
@@ -61,37 +60,68 @@ const steps: ExecutionStep[] = [
   },
 ];
 
+interface TaskResult {
+  goal: string;
+  category: string;
+  result: string;
+  timestamp: string;
+}
+
 export default function ExecutingPage() {
   const [currentSteps, setCurrentSteps] = useState(steps);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [taskResult, setTaskResult] = useState<TaskResult | null>(null);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
+    // Get task result from sessionStorage
+    const stored = sessionStorage.getItem('taskResult');
+    if (stored) {
+      try {
+        setTaskResult(JSON.parse(stored));
+      } catch (e) {
+        console.error('Failed to parse task result');
+      }
+    }
+
     // Simulate step progression
     const intervals: NodeJS.Timeout[] = [];
 
-    // Simulate Research step completion
     intervals.push(
       setTimeout(() => {
         setCurrentSteps((prev) =>
           prev.map((step) =>
             step.id === '3'
-              ? { ...step, status: 'completed', duration: '4.2s' }
+              ? { ...step, status: 'completed', duration: '1.8s' }
               : step.id === '4'
               ? { ...step, status: 'in_progress' }
               : step
           )
         );
-      }, 3000)
+      }, 2000)
     );
 
-    // Simulate Creating step completion
     intervals.push(
       setTimeout(() => {
         setCurrentSteps((prev) =>
           prev.map((step) =>
             step.id === '4'
-              ? { ...step, status: 'completed', duration: '6.5s' }
+              ? { ...step, status: 'completed', duration: '3.2s' }
               : step.id === '5'
+              ? { ...step, status: 'in_progress' }
+              : step
+          )
+        );
+      }, 4000)
+    );
+
+    intervals.push(
+      setTimeout(() => {
+        setCurrentSteps((prev) =>
+          prev.map((step) =>
+            step.id === '5'
+              ? { ...step, status: 'completed', duration: '1.5s' }
+              : step.id === '6'
               ? { ...step, status: 'in_progress' }
               : step
           )
@@ -99,48 +129,31 @@ export default function ExecutingPage() {
       }, 6000)
     );
 
-    // Simulate Reviewing step completion
-    intervals.push(
-      setTimeout(() => {
-        setCurrentSteps((prev) =>
-          prev.map((step) =>
-            step.id === '5'
-              ? { ...step, status: 'completed', duration: '3.2s' }
-              : step.id === '6'
-              ? { ...step, status: 'in_progress' }
-              : step
-          )
-        );
-      }, 9000)
-    );
-
-    // Simulate Optimizing step completion
     intervals.push(
       setTimeout(() => {
         setCurrentSteps((prev) =>
           prev.map((step) =>
             step.id === '6'
-              ? { ...step, status: 'completed', duration: '2.8s' }
+              ? { ...step, status: 'completed', duration: '1.2s' }
               : step.id === '7'
               ? { ...step, status: 'in_progress' }
               : step
           )
         );
-      }, 12000)
+      }, 8000)
     );
 
-    // Simulate completion
     intervals.push(
       setTimeout(() => {
         setCurrentSteps((prev) =>
           prev.map((step) =>
             step.id === '7'
-              ? { ...step, status: 'completed', duration: '1.5s' }
+              ? { ...step, status: 'completed', duration: '0.8s' }
               : step
           )
         );
         setIsCompleted(true);
-      }, 14000)
+      }, 10000)
     );
 
     return () => intervals.forEach((interval) => clearTimeout(interval));
@@ -177,8 +190,12 @@ export default function ExecutingPage() {
 
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-text-primary mb-2">Build a landing page for my startup</h1>
-        <p className="text-text-secondary">Executing with Grok & Gemini</p>
+        <h1 className="text-3xl font-bold text-text-primary mb-2">
+          {taskResult?.goal || 'Executing task...'}
+        </h1>
+        <p className="text-text-secondary">
+          {taskResult?.category ? `Category: ${taskResult.category}` : 'Executing with Gemini'}
+        </p>
       </div>
 
       {/* Progress Bar */}
@@ -241,21 +258,39 @@ export default function ExecutingPage() {
 
           {/* Result Preview */}
           <div className="bg-white border border-border-light rounded-lg p-8">
-            <h3 className="text-lg font-semibold text-text-primary mb-4">Deliverable Preview</h3>
-            <div className="bg-bg-secondary rounded-lg p-6 mb-4 h-64 overflow-hidden">
-              <p className="text-text-secondary text-sm">Landing page HTML, CSS, and components</p>
+            <h3 className="text-lg font-semibold text-text-primary mb-4">Your Result</h3>
+            <div className="bg-bg-secondary rounded-lg p-6 mb-4 max-h-96 overflow-y-auto whitespace-pre-wrap text-text-primary text-sm leading-relaxed">
+              {taskResult?.result || 'Processing...'}
             </div>
           </div>
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-3">
-            <button className="flex items-center justify-center gap-2 flex-1 px-6 py-3 bg-accent text-white rounded-lg font-semibold hover:bg-opacity-90 transition-all">
+            <button
+              onClick={() => {
+                const element = document.createElement('a');
+                const file = new Blob([taskResult?.result || ''], { type: 'text/plain' });
+                element.href = URL.createObjectURL(file);
+                element.download = `oneshot-result-${Date.now()}.txt`;
+                document.body.appendChild(element);
+                element.click();
+                document.body.removeChild(element);
+              }}
+              className="flex items-center justify-center gap-2 flex-1 px-6 py-3 bg-accent text-white rounded-lg font-semibold hover:bg-opacity-90 transition-all"
+            >
               <Download className="w-5 h-5" />
               Download
             </button>
-            <button className="flex items-center justify-center gap-2 flex-1 px-6 py-3 border border-border-light text-text-primary rounded-lg font-semibold hover:bg-bg-secondary transition-all">
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(taskResult?.result || '');
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              }}
+              className="flex items-center justify-center gap-2 flex-1 px-6 py-3 border border-border-light text-text-primary rounded-lg font-semibold hover:bg-bg-secondary transition-all"
+            >
               <Copy className="w-5 h-5" />
-              Copy
+              {copied ? 'Copied!' : 'Copy'}
             </button>
             <button className="flex items-center justify-center gap-2 flex-1 px-6 py-3 border border-border-light text-text-primary rounded-lg font-semibold hover:bg-bg-secondary transition-all">
               <Share2 className="w-5 h-5" />
