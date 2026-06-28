@@ -40,23 +40,44 @@ the interface is clean and minimal because i hate clutter. the execution is fast
 
 ## how i built it
 
-**next.js 15** — app router, typescript, fast  
+**next.js 15** — app router, typescript, strict mode  
 **tailwind css** — styling without the pain  
-**gemini api** — solid AI backbone  
+**gemini 2.5 flash api** — solid AI backbone  
+**supabase** — postgres database for task persistence  
 **vercel** — deployed and live  
 
 the code is clean. the design is intentional. everything has a reason.
+
+## setting up the database (optional)
+
+tasks are automatically saved if you configure Supabase. without it, everything still works — just no persistence.
+
+[see DATABASE_SETUP.md for full instructions](./DATABASE_SETUP.md)
+
+## features
+
+**templates** — pre-made workflows for common tasks (business plans, landing pages, marketing strategies, etc). pick one and customize. saves time.
+
+**keyboard shortcuts** — press `Cmd+K` (Mac) or `Ctrl+K` (Windows/Linux) to open quick task search from anywhere in the dashboard.
+
+**saved results** — all your executed tasks are automatically saved. browse past results, download, or copy anytime.
+
+**settings** — customize creativity level, quality, speed, output format, and writing style. preferences persist across sessions.
+
+**task templates** — browse 8 pre-built templates optimized for different workflows. click to use.
+
+**rate limiting** — 5 requests per minute per IP to prevent abuse. clean error messages if you hit the limit.
 
 ## try it
 
 go to [oneshot-chi-nine.vercel.app](https://oneshot-chi-nine.vercel.app)
 
-1. click "Create New Task"
-2. describe what you want (just be natural about it)
-3. pick a category (optional but helps)
+1. click "Create New Task" (or press `Cmd+K`)
+2. describe what you want (or pick a template)
+3. pick a category (optional)
 4. hit Execute
 5. watch it work
-6. download or copy your result
+6. download, copy, or save your result
 
 no account. no credit card. no setup. it just works.
 
