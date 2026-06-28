@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowRight, Sparkles, Brain, Code, Palette, Briefcase, TrendingUp, BookOpen, Globe } from 'lucide-react';
 
@@ -25,6 +26,7 @@ const exampleGoals = [
 ];
 
 export default function NewTaskPage() {
+  const router = useRouter();
   const [goal, setGoal] = useState('');
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -48,17 +50,21 @@ export default function NewTaskPage() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to execute task');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to execute task');
       }
 
       const data = await response.json();
 
       // Store the result in sessionStorage to pass to execution page
-      sessionStorage.setItem('taskResult', JSON.stringify(data));
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('taskResult', JSON.stringify(data));
+      }
 
       // Redirect to execution page
-      window.location.href = '/dashboard/executing/1';
+      router.push('/dashboard/executing/1');
     } catch (err) {
+      console.error('Task submission error:', err);
       setError(err instanceof Error ? err.message : 'An error occurred');
       setIsSubmitting(false);
     }
