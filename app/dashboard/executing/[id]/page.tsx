@@ -287,10 +287,14 @@ export default function ExecutingPage() {
                 setCopied(true);
                 setTimeout(() => setCopied(false), 2000);
               }}
-              className="flex items-center justify-center gap-2 flex-1 px-6 py-3 border border-border-light text-text-primary rounded-lg font-semibold hover:bg-bg-secondary transition-all"
+              className={`flex items-center justify-center gap-2 flex-1 px-6 py-3 rounded-lg font-semibold transition-all ${
+                copied
+                  ? 'bg-success text-white border-success'
+                  : 'border border-border-light text-text-primary hover:bg-bg-secondary'
+              }`}
             >
               <Copy className="w-5 h-5" />
-              {copied ? 'Copied!' : 'Copy'}
+              {copied ? '✓ Copied!' : 'Copy'}
             </button>
             <button className="flex items-center justify-center gap-2 flex-1 px-6 py-3 border border-border-light text-text-primary rounded-lg font-semibold hover:bg-bg-secondary transition-all">
               <Share2 className="w-5 h-5" />
