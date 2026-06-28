@@ -1,101 +1,56 @@
-# OneShot — Stop Prompting. Start Getting Results.
+# OneShot
 
-honestly, we've all been there. you open chatgpt or claude. you spend 20 minutes writing the perfect prompt. it comes back... close but not right. so you try again. and again. and again.
+i was stuck in prompt engineering hell. you know the loop—write a prompt, get something close, tweak it, get closer, spend an hour just to get one decent output. burning credits the whole time.
 
-after an hour of prompt engineering and burning through credits, you finally have something usable.
+so i built oneshot. you tell it what you need. it gives you results. no prompt ballet. no regenerate spam. just describe what you want and move on with your life.
 
-**oneshot exists because that's broken.**
+## how to use it
 
-## what is it?
+go to **[oneshot-chi-nine.vercel.app](https://oneshot-chi-nine.vercel.app)**
 
-oneshot is an app where you describe what you want in plain english, hit execute, and get a professional result. no prompt tweaking. no retries. no "let me regenerate that." you just say what you need and it handles everything.
+1. write what you need (just be natural about it)
+2. optionally pick a category or use a template
+3. hit execute
+4. get results in a few seconds
+5. copy/download/save
 
-that's it. it's that simple.
+that's the whole thing. seriously.
 
-## how it actually works
+## what actually happens
 
-1. **you describe your goal** — "build me a business plan" or "write a marketing strategy for my startup"
-2. **gemini does the heavy lifting** — takes your goal, generates a comprehensive response tailored to what you asked
-3. **you get the result** — download it, copy it, or use it immediately
-4. **no prompt engineering required** — just natural language
+- you describe a goal like "write me a 1-page business plan"
+- oneshot hits gemini with the right prompting behind the scenes
+- gemini returns something solid
+- you get it. no waiting. no tweaking. no "try again"
+- you download it, copy it, or keep it saved
 
-the whole thing takes minutes. you don't wait long. you don't see the behind-the-scenes stuff. you just get results.
+## what can you build with it
 
-## why this works
+business plans. marketing strategies. sales emails. research reports. study guides. code. design docs. competitor analysis. whatever you want to describe, it'll handle.
 
-most ai tools make you do the work. oneshot does the work for you. your job is just to ask.
+## features that matter
 
-## what you can do with it
+**templates** — 8 pre-built workflows (business plan, landing page, marketing strategy, etc). one click. done.
 
-**business stuff** — write a business plan, create a marketing strategy, analyze competitors, draft pitch decks  
-**writing** — email sequences, sales copy, blog posts, documentation  
-**research** — deep dives into topics, competitor analysis, market summaries  
-**anything else** — literally just describe it and it'll handle it
+**keyboard shortcut** — press Cmd+K (mac) or Ctrl+K (windows) to jump to task creation from anywhere. power users appreciate this.
 
-## the real story
+**saves your work** — everything you create gets saved. browse your history, download old results, never lose anything.
 
-i built this because i got tired of spending hours on prompts. i wanted something that just... works. no tweaking. no retries. just describe what you want and get it.
+**settings that stick** — customize how it works (creativity, quality, speed, format, style). your preferences stay.
 
-the interface is clean and minimal because i hate clutter. the execution is fast because your time matters. everything is straightforward because complicated tools suck.
+**clean errors** — hit rate limits? you get a clear message saying "try again in 30 seconds." no mystery.
 
-## how i built it
+## the tech
 
-**next.js 15** — app router, typescript, strict mode  
-**tailwind css** — styling without the pain  
-**gemini 2.5 flash api** — solid AI backbone  
-**supabase** — postgres database for task persistence  
-**vercel** — deployed and live  
+- next.js 15 (app router, typescript)
+- gemini 2.5 flash (the ai backbone)
+- tailwind css (styling)
+- supabase (optional database—it still works without it)
+- vercel (hosting)
 
-the code is clean. the design is intentional. everything has a reason.
+all of it is minimal. no bloat. no unnecessary libraries. code is clean because i can't stand messy codebases.
 
-## setting up the database (optional)
-
-tasks are automatically saved if you configure Supabase. without it, everything still works — just no persistence.
-
-[see DATABASE_SETUP.md for full instructions](./DATABASE_SETUP.md)
-
-## features
-
-**templates** — pre-made workflows for common tasks (business plans, landing pages, marketing strategies, etc). pick one and customize. saves time.
-
-**keyboard shortcuts** — press `Cmd+K` (Mac) or `Ctrl+K` (Windows/Linux) to open quick task search from anywhere in the dashboard.
-
-**saved results** — all your executed tasks are automatically saved. browse past results, download, or copy anytime.
-
-**settings** — customize creativity level, quality, speed, output format, and writing style. preferences persist across sessions.
-
-**task templates** — browse 8 pre-built templates optimized for different workflows. click to use.
-
-**rate limiting** — 5 requests per minute per IP to prevent abuse. clean error messages if you hit the limit.
-
-## try it
-
-go to [oneshot-chi-nine.vercel.app](https://oneshot-chi-nine.vercel.app)
-
-1. click "Create New Task" (or press `Cmd+K`)
-2. describe what you want (or pick a template)
-3. pick a category (optional)
-4. hit Execute
-5. watch it work
-6. download, copy, or save your result
-
-no account. no credit card. no setup. it just works.
-
-## questions?
-
-**will the result be good?**  
-yes. gemini is solid and we prompt it right. results are professional-quality.
-
-**how long?**  
-depends on complexity. simple stuff (emails, outlines) is 30 seconds. bigger things (business plans, research) might be a few minutes. still way faster than doing it yourself.
-
-**can i use it for my business?**  
-absolutely. whatever you create is yours. build on it, sell it, whatever.
-
-**is my data private?**  
-your tasks get sent to gemini and aren't stored long-term. we don't use them for anything else. you're not the product here.
-
-## if you want to dev on it
+## setup for development
 
 ```bash
 git clone https://github.com/nadellasripad11/oneshot
@@ -104,25 +59,33 @@ npm install
 npm run dev
 ```
 
-open http://localhost:3000
+open localhost:3000. it'll work immediately.
 
-to build: `npm run build`  
-to deploy: `vercel deploy --prod`
+build: `npm run build`  
+deploy: `vercel deploy --prod`
 
-## ai usage declaration
+optional: set up supabase for persistence. see DATABASE_SETUP.md.
 
-used claude for brainstorming the product idea and some debugging help. i built all the components, set up the design system, wired everything together, deployed it, wrote the readme. claude helped me think through architecture decisions and catch some bugs, but the actual execution and shipping was all me. pretty happy with how it turned out honestly.
+## real talk
 
-## built by
+**will results be good?** yeah. gemini is solid. i prompt it right. you get professional-quality work.
 
-[sripad nadella](https://sripadnadella.com) — cs student, full-stack engineer, tired of prompt engineering
+**how fast?** simple stuff (emails, outlines) is 30 seconds. bigger stuff (research, plans) takes a few minutes. still beats spending an hour on prompts.
+
+**can i use this commercially?** absolutely. whatever you create is yours. sell it. modify it. do whatever.
+
+**what about my privacy?** tasks go to gemini. they're not stored permanently. you're not the product.
+
+## who built this
+
+me, [sripad nadella](https://sripadnadella.com). i'm a cs student who got tired of prompt engineering and built a tool that actually solves it. 
+
+i used claude for brainstorming and debugging help. i built the actual app, wired it all together, and shipped it. pretty straightforward story.
 
 ## license
 
-mit — do whatever you want with it
+MIT. use it however you want.
 
 ---
 
-**try it out:** [oneshot-chi-nine.vercel.app](https://oneshot-chi-nine.vercel.app)
-
-one goal. one result. no retries.
+**[go use it](https://oneshot-chi-nine.vercel.app)** — takes 30 seconds to see if it solves your problem.
