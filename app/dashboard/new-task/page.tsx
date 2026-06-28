@@ -51,6 +51,9 @@ export default function NewTaskPage() {
 
       if (!response.ok) {
         const errorData = await response.json();
+        if (response.status === 429) {
+          throw new Error(errorData.error);
+        }
         throw new Error(errorData.error || 'Failed to execute task');
       }
 

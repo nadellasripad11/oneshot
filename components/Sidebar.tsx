@@ -20,7 +20,6 @@ const navItems = [
   { label: 'Tasks', href: '/dashboard/tasks', icon: FileText },
   { label: 'Templates', href: '/dashboard/templates', icon: Archive },
   { label: 'Saved Results', href: '/dashboard/results', icon: Zap },
-  { label: 'Usage', href: '/dashboard/usage', icon: Zap },
   { label: 'Settings', href: '/dashboard/settings', icon: Settings },
 ];
 

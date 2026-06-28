@@ -1,9 +1,53 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
 
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent';
 
+// Rate limiting: 5 requests per minute per IP
+const RATE_LIMIT = 5;
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+
+function getClientIp(request: NextRequest): string {
+  const forwarded = request.headers.get('x-forwarded-for');
+  const ip = forwarded ? forwarded.split(',')[0] : request.headers.get('x-real-ip') || 'unknown';
+  return ip;
+}
+
+function checkRateLimit(ip: string): { allowed: boolean; retryAfter?: number } {
+  const now = Date.now();
+  const rateLimitData = rateLimitMap.get(ip);
+
+  if (!rateLimitData || now > rateLimitData.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
+    return { allowed: true };
+  }
+
+  if (rateLimitData.count >= RATE_LIMIT) {
+    const retryAfter = Math.ceil((rateLimitData.resetTime - now) / 1000);
+    return { allowed: false, retryAfter };
+  }
+
+  rateLimitData.count++;
+  return { allowed: true };
+}
+
 export async function POST(request: NextRequest) {
   try {
+    const clientIp = getClientIp(request);
+    const rateLimitCheck = checkRateLimit(clientIp);
+
+    if (!rateLimitCheck.allowed) {
+      const retryAfter = rateLimitCheck.retryAfter;
+      return NextResponse.json(
+        {
+          error: `Too many requests. Try again in ${retryAfter} second${retryAfter !== 1 ? 's' : ''}`,
+          retryAfter
+        },
+        { status: 429 }
+      );
+    }
+
     const { goal, category } = await request.json();
 
     if (!goal) {
@@ -14,6 +58,9 @@ export async function POST(request: NextRequest) {
     if (!apiKey) {
       return NextResponse.json({ error: 'API key not configured' }, { status: 500 });
     }
+
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
     // Create a prompt that guides Gemini to produce the right output
     const prompt = `You are an expert AI assistant. The user has asked you to: "${goal}"
@@ -62,6 +109,23 @@ Make sure your response is:
 
     const data = await response.json();
     const result = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response generated';
+
+    // Save to Supabase if configured
+    if (supabaseUrl && supabaseAnonKey) {
+      try {
+        const supabase = createClient(supabaseUrl, supabaseAnonKey);
+        await supabase.from('tasks').insert({
+          goal,
+          category: category || 'general',
+          result,
+          ip_address: clientIp,
+          created_at: new Date().toISOString(),
+        });
+      } catch (dbError) {
+        console.warn('Failed to save task to database:', dbError);
+        // Don't fail the request if database save fails
+      }
+    }
 
     return NextResponse.json({
       success: true,
