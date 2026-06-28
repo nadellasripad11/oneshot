@@ -74,6 +74,7 @@ export default function ExecutingPage() {
   const [taskResult, setTaskResult] = useState<TaskResult | null>(null);
   const [copied, setCopied] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [progress, setProgress] = useState(28); // Start at 28% since 2 steps are pre-completed
 
   useEffect(() => {
     // Get task result from sessionStorage
@@ -100,6 +101,7 @@ export default function ExecutingPage() {
               : step
           )
         );
+        setProgress(43); // 3/7 steps
       }, 2000)
     );
 
@@ -114,6 +116,7 @@ export default function ExecutingPage() {
               : step
           )
         );
+        setProgress(57); // 4/7 steps
       }, 4000)
     );
 
@@ -128,6 +131,7 @@ export default function ExecutingPage() {
               : step
           )
         );
+        setProgress(71); // 5/7 steps
       }, 6000)
     );
 
@@ -142,6 +146,7 @@ export default function ExecutingPage() {
               : step
           )
         );
+        setProgress(86); // 6/7 steps
       }, 8000)
     );
 
@@ -154,6 +159,7 @@ export default function ExecutingPage() {
               : step
           )
         );
+        setProgress(100);
         setIsCompleted(true);
       }, 10000)
     );
@@ -200,21 +206,32 @@ export default function ExecutingPage() {
         </p>
       </div>
 
-      {/* Progress Bar */}
-      <div className="mb-8">
-        <div className="flex justify-between items-center mb-2">
-          <p className="text-sm font-medium text-text-primary">
-            {currentSteps.filter((s) => s.status === 'completed').length} of {currentSteps.length} steps
+      {/* Progress Section */}
+      <div className="mb-12">
+        {/* Large Percentage Display */}
+        <div className="mb-6 text-center">
+          <div className="text-6xl font-bold text-accent mb-2">{progress}%</div>
+          <p className="text-text-secondary">
+            {isCompleted ? 'Complete!' : 'Executing task...'}
           </p>
-          <p className="text-sm text-text-secondary">{totalDuration.toFixed(1)}s total</p>
         </div>
-        <div className="w-full h-2 bg-border-light rounded-full overflow-hidden">
+
+        {/* Progress Bar */}
+        <div className="w-full h-3 bg-border-light rounded-full overflow-hidden">
           <div
             className="h-full bg-accent rounded-full transition-all duration-500"
             style={{
-              width: `${(currentSteps.filter((s) => s.status === 'completed').length / currentSteps.length) * 100}%`,
+              width: `${progress}%`,
             }}
           />
+        </div>
+
+        {/* Steps Counter */}
+        <div className="flex justify-between items-center mt-4">
+          <p className="text-sm text-text-secondary">
+            {currentSteps.filter((s) => s.status === 'completed').length} of {currentSteps.length} steps complete
+          </p>
+          <p className="text-sm text-text-secondary">{totalDuration.toFixed(1)}s elapsed</p>
         </div>
       </div>
 
