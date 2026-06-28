@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowRight, Sparkles, Brain, Code, Palette, Briefcase, TrendingUp, BookOpen, Globe } from 'lucide-react';
@@ -31,6 +31,32 @@ export default function NewTaskPage() {
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Load template if coming from templates page
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const templatePrompt = sessionStorage.getItem('templatePrompt');
+      const templateCategory = sessionStorage.getItem('templateCategory');
+      if (templatePrompt) {
+        setGoal(templatePrompt);
+        sessionStorage.removeItem('templatePrompt');
+      }
+      if (templateCategory) {
+        const categoryMap: Record<string, string> = {
+          'Business': 'business',
+          'Design': 'design',
+          'Sales': 'marketing',
+          'Research': 'research',
+          'Education': 'education',
+          'Marketing': 'marketing',
+          'Product': 'general',
+        };
+        const mappedType = categoryMap[templateCategory];
+        if (mappedType) setSelectedType(mappedType);
+        sessionStorage.removeItem('templateCategory');
+      }
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

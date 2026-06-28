@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { CheckCircle, Clock, Loader, Download, Share2, Copy, Save, ArrowLeft } from 'lucide-react';
+import { CheckCircle, Clock, Loader, Download, Share2, Copy, Save, ArrowLeft, Maximize2 } from 'lucide-react';
+import ResultModal from '@/components/ResultModal';
 
 interface ExecutionStep {
   id: string;
@@ -72,6 +73,7 @@ export default function ExecutingPage() {
   const [isCompleted, setIsCompleted] = useState(false);
   const [taskResult, setTaskResult] = useState<TaskResult | null>(null);
   const [copied, setCopied] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     // Get task result from sessionStorage
@@ -258,11 +260,28 @@ export default function ExecutingPage() {
 
           {/* Result Preview */}
           <div className="bg-white border border-border-light rounded-lg p-8">
-            <h3 className="text-lg font-semibold text-text-primary mb-4">Your Result</h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-text-primary">Your Result</h3>
+              <button
+                onClick={() => setModalOpen(true)}
+                className="flex items-center gap-2 px-3 py-1 text-sm text-accent hover:bg-bg-secondary rounded-lg transition-colors"
+              >
+                <Maximize2 className="w-4 h-4" />
+                Expand
+              </button>
+            </div>
             <div className="bg-bg-secondary rounded-lg p-6 mb-4 max-h-96 overflow-y-auto whitespace-pre-wrap text-text-primary text-sm leading-relaxed">
               {taskResult?.result || 'Processing...'}
             </div>
           </div>
+
+          {/* Result Modal */}
+          <ResultModal
+            isOpen={modalOpen}
+            onClose={() => setModalOpen(false)}
+            result={taskResult?.result || ''}
+            goal={taskResult?.goal || 'Task Result'}
+          />
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-3">

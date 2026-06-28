@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { Save } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Save, Check } from 'lucide-react';
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState({
@@ -11,9 +11,29 @@ export default function SettingsPage() {
     outputFormat: 'markdown',
     writingStyle: 'professional',
   });
+  const [saved, setSaved] = useState(false);
+
+  // Load settings from localStorage on mount
+  useEffect(() => {
+    const stored = localStorage.getItem('oneshot-settings');
+    if (stored) {
+      try {
+        setSettings(JSON.parse(stored));
+      } catch (e) {
+        console.error('Failed to load settings');
+      }
+    }
+  }, []);
 
   const handleChange = (key: string, value: string) => {
     setSettings({ ...settings, [key]: value });
+  };
+
+  const handleSave = (e: React.FormEvent) => {
+    e.preventDefault();
+    localStorage.setItem('oneshot-settings', JSON.stringify(settings));
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
   };
 
   return (
@@ -25,7 +45,7 @@ export default function SettingsPage() {
       </div>
 
       {/* Settings Form */}
-      <form className="space-y-8">
+      <form className="space-y-8" onSubmit={handleSave}>
         {/* Creativity Level */}
         <div>
           <label className="block text-sm font-semibold text-text-primary mb-4">
@@ -150,13 +170,32 @@ export default function SettingsPage() {
         {/* Save Button */}
         <button
           type="submit"
-          className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-accent text-white rounded-lg font-semibold hover:bg-opacity-90 transition-all"
+          className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+            saved
+              ? 'bg-success text-white'
+              : 'bg-accent text-white hover:bg-opacity-90'
+          }`}
         >
-          <Save className="w-5 h-5" />
-          Save Settings
+          {saved ? (
+            <>
+              <Check className="w-5 h-5" />
+              Settings Saved
+            </>
+          ) : (
+            <>
+              <Save className="w-5 h-5" />
+              Save Settings
+            </>
+          )}
         </button>
       </form>
 
+      {/* Info Box */}
+      <div className="mt-8 p-4 bg-bg-secondary rounded-lg border border-border-light">
+        <p className="text-sm text-text-secondary">
+          💡 Your settings are saved locally and will be applied to all future tasks.
+        </p>
+      </div>
     </div>
   );
 }
